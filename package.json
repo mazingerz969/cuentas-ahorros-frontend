@@ -4,12 +4,7 @@
   "description": "Frontend Angular para gestión de cuentas de ahorros",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "npm run postinstall && npx ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
+    "build": "npx ng build",
     "postinstall": "chmod +x ./node_modules/.bin/ng || true"
   },
   "private": true,
@@ -26,7 +21,8 @@
     "@angular/router": "^17.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.2"
+    "zone.js": "~0.14.2",
+    "serve": "^14.2.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.0",
