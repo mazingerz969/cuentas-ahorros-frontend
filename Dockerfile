@@ -9,13 +9,13 @@ COPY package*.json ./
 # Instalar Angular CLI globalmente primero
 RUN npm install -g @angular/cli@17
 
-# Instalar todas las dependencias del proyecto
-RUN npm ci
+# Usar npm install en lugar de npm ci para evitar problemas de lock
+RUN npm install
 
 # Copiar el código fuente
 COPY . .
 
-# Hacer el build directamente con ng (sin postinstall)
+# Hacer el build directamente con ng
 RUN npx ng build --configuration=production
 
 # Etapa 2: Servir la aplicación
@@ -29,8 +29,8 @@ COPY --from=builder /app/dist ./dist
 # Instalar serve para producción
 RUN npm install -g serve@13.0.4
 
-# Exponer el puerto que Railway asignará
-EXPOSE $PORT
+# Exponer el puerto
+EXPOSE 8080
 
 # Comando para iniciar la aplicación
 CMD ["serve", "dist", "-s", "-p", "$PORT"]
