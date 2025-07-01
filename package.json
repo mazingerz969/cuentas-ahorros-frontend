@@ -4,7 +4,7 @@
     "description": "Frontend Angular para gestión de cuentas de ahorros",
     "scripts": {
       "ng": "ng",
-      "build": "npx ng build",
+      "build": "npm run postinstall && npx ng build",
       "postinstall": "chmod +x ./node_modules/.bin/ng || true"
     },
     "private": true,
