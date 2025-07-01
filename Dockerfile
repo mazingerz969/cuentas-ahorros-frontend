@@ -26,31 +26,32 @@ WORKDIR /app
 # Copiar los archivos compilados
 COPY --from=builder /app/dist ./dist
 
+# Crear package.json mínimo para Express
+RUN echo '{"dependencies":{"express":"^4.18.2"}}' > package.json
+
 # Instalar express
-RUN npm install express
+RUN npm install
 
 # Crear servidor Express
-COPY <<EOF server.js
+RUN cat > server.js << 'EOF'
 const express = require('express');
 const path = require('path');
 const app = express();
 const port = process.env.PORT || 8080;
 
-// Servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Manejar rutas SPA - devolver index.html para todas las rutas
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 app.listen(port, () => {
-  console.log(\`Server running on port \${port}\`);
+  console.log(`Server running on port ${port}`);
 });
 EOF
 
 # Exponer puerto
 EXPOSE 8080
 
-# Iniciar el servidor Express
+# Iniciar el servidor
 CMD ["node", "server.js"]
