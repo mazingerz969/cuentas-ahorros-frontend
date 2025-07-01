@@ -1,4 +1,4 @@
-# Etapa 1: Build de la aplicación
+# Etapa 1: Build de la aplicación Angular
 FROM node:18-alpine AS builder
 
 WORKDIR /app
@@ -6,31 +6,31 @@ WORKDIR /app
 # Copiar archivos de dependencias
 COPY package*.json ./
 
-# Instalar todas las dependencias (incluyendo devDependencies)
+# Instalar Angular CLI globalmente primero
+RUN npm install -g @angular/cli@17
+
+# Instalar todas las dependencias del proyecto
 RUN npm ci
 
 # Copiar el código fuente
 COPY . .
 
-# Hacer el build de Angular
-RUN npm run build
+# Hacer el build directamente con ng (sin postinstall)
+RUN npx ng build --configuration=production
 
 # Etapa 2: Servir la aplicación
 FROM node:18-alpine AS production
 
 WORKDIR /app
 
-# Copiar solo los archivos compilados desde la etapa anterior
+# Copiar los archivos compilados desde la etapa de build
 COPY --from=builder /app/dist ./dist
 
-# Copiar package.json para instalar serve
-COPY package*.json ./
+# Instalar serve para producción
+RUN npm install -g serve@13.0.4
 
-# Instalar solo las dependencias de producción
-RUN npm ci --only=production
-
-# Exponer el puerto
+# Exponer el puerto que Railway asignará
 EXPOSE $PORT
 
 # Comando para iniciar la aplicación
-CMD ["npx", "serve", "dist", "-s", "-p", "$PORT"]
+CMD ["serve", "dist", "-s", "-p", "$PORT"]
