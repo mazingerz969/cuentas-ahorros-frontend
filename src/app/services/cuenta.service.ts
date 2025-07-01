@@ -36,6 +36,7 @@ export class CuentaService {
    * Se configura para apuntar al servidor Spring Boot.
    */
   private readonly API_URL = 'http://localhost:8080/api';
+  
 
   /**
    * BehaviorSubject para mantener el estado de las cuentas.
