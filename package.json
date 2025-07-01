@@ -4,9 +4,8 @@
     "description": "Frontend Angular para gestión de cuentas de ahorros",
     "scripts": {
         "ng": "ng",
-        "build": "npm run postinstall && npx ng build --configuration=production",
-        "postinstall": "chmod +x ./node_modules/.bin/ng || true",
-        "start": "npx serve dist -s -p $PORT"
+        "build": "ng build --configuration=production",
+        "start": "serve dist -s -p $PORT"
     },
     "private": true,
     "dependencies": {
@@ -21,7 +20,6 @@
         "@angular/platform-browser-dynamic": "^17.0.0",
         "@angular/router": "^17.0.0",
         "rxjs": "~7.8.0",
-        "serve": "^13.0.4",
         "tslib": "^2.3.0",
         "zone.js": "~0.14.2"
     },
@@ -38,8 +36,5 @@
         "karma-jasmine": "~5.1.0",
         "karma-jasmine-html-reporter": "~2.1.0",
         "typescript": "~5.2.2"
-    },
-    "overrides": {
-        "path-to-regexp": "6.2.1"
     }
- }
+}

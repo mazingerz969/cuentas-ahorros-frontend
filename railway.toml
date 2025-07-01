@@ -1,8 +1,5 @@
 [build]
-builder = "NIXPACKS"
+builder = "DOCKERFILE"
 
 [deploy]
-startCommand = "npm run build && npx serve dist -s -p $PORT"
-
-[[services]]
-serviceName = "frontend"
+startCommand = "serve dist -s -p $PORT"
