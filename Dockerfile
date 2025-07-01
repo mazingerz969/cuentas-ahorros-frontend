@@ -6,7 +6,7 @@ WORKDIR /app
 # Copiar archivos de dependencias
 COPY package*.json ./
 
-# Instalar Angular CLI globalmente primero
+# Instalar Angular CLI globalmente
 RUN npm install -g @angular/cli@17
 
 # Instalar dependencias
@@ -26,24 +26,31 @@ WORKDIR /app
 # Copiar los archivos compilados
 COPY --from=builder /app/dist ./dist
 
-# Crear un servidor simple
-RUN echo "const express = require('express');" > server.js && \
-    echo "const path = require('path');" >> server.js && \
-    echo "const app = express();" >> server.js && \
-    echo "const port = process.env.PORT || 8080;" >> server.js && \
-    echo "app.use(express.static(path.join(__dirname, 'dist')));" >> server.js && \
-    echo "app.get('*', (req, res) => {" >> server.js && \
-    echo "  res.sendFile(path.join(__dirname, 'dist/index.html'));" >> server.js && \
-    echo "});" >> server.js && \
-    echo "app.listen(port, () => {" >> server.js && \
-    echo "  console.log(\`Server running on port \${port}\`);" >> server.js && \
-    echo "});" >> server.js
-
 # Instalar express
 RUN npm install express
+
+# Crear servidor Express
+COPY <<EOF server.js
+const express = require('express');
+const path = require('path');
+const app = express();
+const port = process.env.PORT || 8080;
+
+// Servir archivos estáticos
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Manejar rutas SPA - devolver index.html para todas las rutas
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
+
+app.listen(port, () => {
+  console.log(\`Server running on port \${port}\`);
+});
+EOF
 
 # Exponer puerto
 EXPOSE 8080
 
-# Iniciar el servidor
+# Iniciar el servidor Express
 CMD ["node", "server.js"]
