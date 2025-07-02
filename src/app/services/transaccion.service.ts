@@ -36,9 +36,9 @@ export class TransaccionService {
    * URL base de la API del backend.
    * Se configura para apuntar al servidor Spring Boot.
    */
-  //private readonly API_URL = 'http://localhost:8080/api';
+  private readonly API_URL = 'http://localhost:8080/api';
 
-  private readonly API_URL = 'sistema-cuentas-ahorros-production.up.railway.app';
+  //private readonly API_URL = 'sistema-cuentas-ahorros-production.up.railway.app';
 
   /**
    * BehaviorSubject para mantener el estado de las transacciones.

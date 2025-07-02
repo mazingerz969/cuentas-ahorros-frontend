@@ -3,8 +3,10 @@
     "version": "1.0.0",
     "description": "Frontend Angular para gestión de cuentas de ahorros",
     "scripts": {
-        "build": "ng build --configuration=production",
-        "start": "npx serve dist -s -p $PORT"
+        "start": "ng serve",
+        "ng": "ng",
+        "build": "ng build",
+        "serve:prod": "npx serve -s dist"
     },
     "private": true,
     "dependencies": {
