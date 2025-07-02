@@ -29,12 +29,12 @@ import { CommonModule } from '@angular/common';
           <button class="menu-button" (click)="toggleSidenav()" type="button">
             <span class="menu-icon">☰</span>
           </button>
-          <h1 class="app-title">🏦 Gestión de Cuentas de Ahorros</h1>
+          <h1 class="app-title animated-logo">El Banco de Alberto</h1>
         </div>
         
         <div class="toolbar-center">
           <div class="breadcrumb">
-            <span class="breadcrumb-text">{{ getCurrentPageTitle() }}</span>
+            <a class="breadcrumb-link" routerLink="/transacciones">Transacciones</a>
           </div>
         </div>
         
@@ -84,17 +84,18 @@ import { CommonModule } from '@angular/common';
     </div>
   `,
   styles: [`
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     .app-container {
       height: 100vh;
       display: flex;
       flex-direction: column;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     /* Barra de navegación superior */
@@ -171,10 +172,22 @@ import { CommonModule } from '@angular/common';
       backdrop-filter: blur(10px);
     }
 
-    .breadcrumb-text {
-      font-size: 14px;
-      font-weight: 500;
-      color: white;
+    .breadcrumb-link {
+      background: #764ba2;
+      color: #fff;
+      padding: 8px 24px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+    }
+    .breadcrumb-link:hover {
+      background: #fff;
+      color: #764ba2;
+      border: 1px solid #764ba2;
     }
 
     .notification-button,
@@ -355,6 +368,35 @@ import { CommonModule } from '@angular/common';
       .toolbar-left {
         justify-content: center;
       }
+    }
+
+    .animated-logo {
+      font-family: 'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(270deg, #ff6ec4, #7873f5, #1fd1f9, #ff6ec4);
+      background-size: 800% 800%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientMove 8s ease-in-out infinite;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.25), 0 0 2px #fff, 0 0 8px #764ba2;
+      filter: drop-shadow(0 2px 8px #764ba2);
+      border-radius: 8px;
+      padding: 2px 18px;
+      border: 2px solid #fff3;
+      box-shadow: 0 2px 12px 0 #764ba233;
+      margin-left: 16px;
+      transition: transform 0.2s;
+    }
+    .animated-logo:hover {
+      transform: scale(1.05) rotate(-2deg);
+      box-shadow: 0 4px 24px 0 #1fd1f955;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
   `]
 })

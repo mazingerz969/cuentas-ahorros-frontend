@@ -31,9 +31,19 @@ export const routes: Routes = [
     title: 'Gestión de Cuentas'
   },
   {
+    path: 'cuentas/nueva',
+    loadComponent: () => import('./components/cuentas/cuentas.component').then(m => m.CuentasComponent),
+    title: 'Nueva Cuenta'
+  },
+  {
     path: 'transacciones',
     loadComponent: () => import('./components/transacciones/transacciones.component').then(m => m.TransaccionesComponent),
     title: 'Transacciones'
+  },
+  {
+    path: 'transacciones/nueva',
+    loadComponent: () => import('./components/transacciones/transacciones.component').then(m => m.TransaccionesComponent),
+    title: 'Nueva Transacción'
   },
   {
     path: '**',
