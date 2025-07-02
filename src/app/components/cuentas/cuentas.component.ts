@@ -17,11 +17,10 @@ import { Cuenta, NuevaCuenta, ActualizarCuenta } from '../../models/cuenta.model
  * - Realizar transacciones
  */
 @Component({
-  selector: 'app-cuentas',
-  standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
-  templateUrl: './cuentas.component.html',
-  styleUrls: ['./cuentas.component.scss']
+    selector: 'app-cuentas',
+    imports: [CommonModule, RouterModule, FormsModule],
+    templateUrl: './cuentas.component.html',
+    styleUrls: ['./cuentas.component.scss']
 })
 export class CuentasComponent implements OnInit {
   

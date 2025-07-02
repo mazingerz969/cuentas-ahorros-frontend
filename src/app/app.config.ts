@@ -6,7 +6,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { routes } from './app.routes';
 
 /**
- * Configuración principal de la aplicación Angular.
+ * Configuración principal de la aplicación Angular 20.
  * 
  * Este archivo define todos los providers y configuraciones necesarias
  * para que la aplicación funcione correctamente:
@@ -15,8 +15,10 @@ import { routes } from './app.routes';
  * - provideAnimations: Habilita las animaciones de Angular Material
  * - provideHttpClient: Configura el cliente HTTP para las peticiones al backend
  * 
- * En Angular 17+, la configuración se centraliza en este archivo
- * en lugar de usar módulos tradicionales.
+ * Angular 20 incluye nuevas características como:
+ * - Nuevo control flow (@if, @for, @switch)
+ * - Mejor rendimiento con hydration mejorada
+ * - APIs standalone mejoradas
  */
 export const appConfig: ApplicationConfig = {
   providers: [

@@ -14,14 +14,13 @@ import { CommonModule } from '@angular/common';
  * lo que significa que no necesitan estar declarados en un módulo.
  */
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    RouterModule
-  ],
-  template: `
+    selector: 'app-root',
+    imports: [
+        CommonModule,
+        RouterOutlet,
+        RouterModule
+    ],
+    template: `
     <div class="app-container">
       <!-- Barra de navegación superior -->
       <header class="toolbar">
@@ -83,7 +82,7 @@ import { CommonModule } from '@angular/common';
            *ngIf="sidenavOpen"></div>
     </div>
   `,
-  styles: [`
+    styles: [`
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
     * {
       margin: 0;

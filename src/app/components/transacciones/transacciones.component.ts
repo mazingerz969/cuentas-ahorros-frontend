@@ -17,11 +17,10 @@ import { Cuenta } from '../../models/cuenta.model';
  * - Ver estadísticas de transacciones
  */
 @Component({
-  selector: 'app-transacciones',
-  standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
-  templateUrl: './transacciones.component.html',
-  styleUrls: ['./transacciones.component.scss']
+    selector: 'app-transacciones',
+    imports: [CommonModule, RouterModule, FormsModule],
+    templateUrl: './transacciones.component.html',
+    styleUrls: ['./transacciones.component.scss']
 })
 export class TransaccionesComponent implements OnInit {
   // Hacer TipoTransaccion disponible en el template
