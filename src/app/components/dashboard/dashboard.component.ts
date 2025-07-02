@@ -16,6 +16,7 @@ import { EstadisticasCuentas } from '../../models/cuenta.model';
  */
 @Component({
     selector: 'app-dashboard',
+    standalone: true,
     imports: [CommonModule, RouterModule],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']

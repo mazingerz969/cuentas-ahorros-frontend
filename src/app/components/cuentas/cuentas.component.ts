@@ -18,6 +18,7 @@ import { Cuenta, NuevaCuenta, ActualizarCuenta } from '../../models/cuenta.model
  */
 @Component({
     selector: 'app-cuentas',
+    standalone: true,
     imports: [CommonModule, RouterModule, FormsModule],
     templateUrl: './cuentas.component.html',
     styleUrls: ['./cuentas.component.scss']

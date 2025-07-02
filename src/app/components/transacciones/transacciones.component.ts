@@ -18,6 +18,7 @@ import { Cuenta } from '../../models/cuenta.model';
  */
 @Component({
     selector: 'app-transacciones',
+    standalone: true,
     imports: [CommonModule, RouterModule, FormsModule],
     templateUrl: './transacciones.component.html',
     styleUrls: ['./transacciones.component.scss']
