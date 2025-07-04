@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 import { 
   Transaccion, 
@@ -13,6 +14,8 @@ import {
   EstadisticasGlobales,
   TipoTransaccion 
 } from '../models/transaccion.model';
+
+
 
 /**
  * Servicio para manejar las operaciones de transacciones de cuentas de ahorros.
@@ -36,9 +39,8 @@ export class TransaccionService {
    * URL base de la API del backend.
    * Se configura para apuntar al servidor Spring Boot.
    */
-  private readonly API_URL = 'http://localhost:8080/api';
-
-  //private readonly API_URL = 'sistema-cuentas-ahorros-production.up.railway.app';
+   //private readonly API_URL = 'http://localhost:8080/api';
+   private readonly API_URL = environment.apiUrl;
 
   /**
    * BehaviorSubject para mantener el estado de las transacciones.
