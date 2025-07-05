@@ -28,7 +28,8 @@ import { CommonModule } from '@angular/common';
           <button class="menu-button" (click)="toggleSidenav()" type="button">
             <span class="menu-icon">☰</span>
           </button>
-          <h1 class="app-title animated-logo">El Banco de Alberto</h1>
+          <img src="assets/logo.svg" alt="Logo del Banco" class="app-logo" style="height: 40px;" />
+          <span class="app-title animated-logo">Banco Corporativo</span>
         </div>
         
         <div class="toolbar-center">
