@@ -46,7 +46,7 @@
           <div class="stat-icon deposito">💰</div>
           <div class="stat-content">
             <h3>Total Depósitos</h3>
-            <p class="stat-value">{{ formatearMoneda(totalDepositos.toString()) }}</p>
+            <p class="stat-value"><span class="amount">{{ totalDepositos | currency }}</span></p>
           </div>
         </div>
         
@@ -54,7 +54,7 @@
           <div class="stat-icon retiro">💸</div>
           <div class="stat-content">
             <h3>Total Retiros</h3>
-            <p class="stat-value">{{ formatearMoneda(totalRetiros.toString()) }}</p>
+            <p class="stat-value"><span class="amount">{{ totalRetiros | currency }}</span></p>
           </div>
         </div>
         
@@ -63,7 +63,7 @@
           <div class="stat-content">
             <h3>Balance Neto</h3>
             <p class="stat-value" [class]="balanceNeto >= 0 ? 'positive' : 'negative'">
-              {{ balanceNeto >= 0 ? '+' : '' }}{{ formatearMoneda(balanceNeto.toString()) }}
+              {{ balanceNeto >= 0 ? '+' : '' }}<span class="amount">{{ balanceNeto | currency }}</span>
             </p>
           </div>
         </div>
@@ -97,7 +97,7 @@
         <option value="">Todas las cuentas</option>
         @for (cuenta of cuentas; track cuenta.id) {
           <option [value]="cuenta.id">
-            {{ cuenta.numeroCuenta }} - {{ cuenta.titular }}
+            {{ cuenta.numeroCuenta }} - {{ cuenta.titular }} (<span class="saldo">{{ cuenta.saldo | currency }}</span>)
           </option>
         }
       </select>
@@ -131,7 +131,7 @@
             <div class="transaction-header">
               <h4>{{ transaccion.tipoDescripcion }}</h4>
               <span class="amount" [class]="getClaseTransaccion(transaccion.tipo)">
-                {{ transaccion.tipo === 'DEPOSITO' ? '+' : '-' }}{{ formatearMoneda(transaccion.monto) }}
+                {{ transaccion.tipo === 'DEPOSITO' ? '+' : '-' }}<span class="transaction-amount">{{ transaccion.monto | currency }}</span>
               </span>
             </div>
             
@@ -141,7 +141,7 @@
               @if (transaccion.descripcion) {
                 <p class="description">{{ transaccion.descripcion }}</p>
               }
-              <p class="saldo-resultante">Saldo: {{ formatearMoneda(transaccion.saldoResultante) }}</p>
+              <p class="saldo-resultante">Saldo: <span class="saldo">{{ transaccion.saldoResultante | currency }}</span></p>
             </div>
           </div>
         </div>
@@ -193,7 +193,7 @@
               <option value="">Selecciona una cuenta</option>
               @for (cuenta of opcionesCuentas; track cuenta.id) {
                 <option [value]="cuenta.id">
-                  {{ cuenta.numeroCuenta }} - {{ cuenta.titular }} ({{ formatearMoneda(cuenta.saldo) }})
+                  {{ cuenta.numeroCuenta }} - {{ cuenta.titular }} (<span class="saldo">{{ cuenta.saldo | currency }}</span>)
                 </option>
               }
             </select>

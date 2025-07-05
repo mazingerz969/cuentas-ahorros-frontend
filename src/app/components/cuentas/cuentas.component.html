@@ -90,7 +90,7 @@
           
           <div class="account-details">
             <p class="titular"><strong>Titular:</strong> {{ cuenta.titular }}</p>
-            <p class="saldo"><strong>Saldo:</strong> {{ formatearMoneda(cuenta.saldo) }}</p>
+            <p class="saldo"><strong>Saldo:</strong> <span class="saldo">{{ cuenta.saldo | currency }}</span></p>
             <p class="fecha"><strong>Creada:</strong> {{ formatearFecha(cuenta.fechaCreacion) }}</p>
           </div>
           

@@ -391,10 +391,10 @@ body, * {
 .amount,
 .saldo,
 .transaction-amount {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 160px;
-  display: inline-block;
-  vertical-align: bottom;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 160px !important;
+  display: inline-block !important;
+  vertical-align: bottom !important;
 } 

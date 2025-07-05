@@ -18,7 +18,7 @@
       <div class="card-content">
         <h3>Saldo Total</h3>
         @if (!cargandoCuentas) {
-          <p class="amount">{{ formatearMoneda(saldoTotal) }}</p>
+          <p class="amount"><span class="saldo">{{ saldoTotal | currency }}</span></p>
         } @else {
           <p class="loading">Cargando...</p>
         }
@@ -85,7 +85,7 @@
               </div>
               <div class="account-details">
                 <p class="titular">{{ cuenta.titular }}</p>
-                <p class="saldo">{{ formatearMoneda(parseFloat(cuenta.saldo)) }}</p>
+                <p class="saldo"><span class="saldo">{{ cuenta.saldo | currency }}</span></p>
               </div>
             </div>
           }
@@ -131,7 +131,7 @@
                 <div class="transaction-header">
                   <h4>{{ transaccion.tipoDescripcion }}</h4>
                   <span class="amount" [class]="getClaseTransaccion(transaccion.tipo)">
-                    {{ transaccion.tipo === 'DEPOSITO' ? '+' : '-' }}{{ formatearMoneda(parseFloat(transaccion.monto)) }}
+                    {{ transaccion.tipo === 'DEPOSITO' ? '+' : '-' }}<span class="transaction-amount">{{ transaccion.monto | currency }}</span>
                   </span>
                 </div>
                 <div class="transaction-meta">
