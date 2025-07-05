@@ -373,6 +373,12 @@
       .amount {
         font-size: 1.3rem;
         font-weight: 700;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 160px !important;
+        display: inline-block !important;
+        vertical-align: bottom !important;
 
         &.deposito {
           color: #27ae60;
@@ -711,4 +717,15 @@
       text-align: center;
     }
   }
+} 
+
+/* Estilos para ellipsis en montos */
+.saldo,
+.transaction-amount {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 160px !important;
+  display: inline-block !important;
+  vertical-align: bottom !important;
 } 
