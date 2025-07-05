@@ -98,6 +98,11 @@
       font-weight: 700;
       margin: 0;
       line-height: 1;
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .loading {
