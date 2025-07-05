@@ -92,19 +92,6 @@
       letter-spacing: 0.5px;
     }
 
-    .amount {
-      color: #2c3e50;
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin: 0;
-      line-height: 1;
-      display: block;
-      width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
     .loading {
       color: #95a5a6;
       font-style: italic;
@@ -224,13 +211,6 @@
       font-size: 0.9rem;
       margin: 0 0 0.5rem 0;
     }
-
-    .saldo {
-      color: #27ae60;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 0;
-    }
   }
 }
 
@@ -291,19 +271,6 @@
         font-size: 1.1rem;
         font-weight: 600;
         margin: 0;
-      }
-
-      .amount {
-        font-size: 1.2rem;
-        font-weight: 700;
-
-        &.deposito {
-          color: #27ae60;
-        }
-
-        &.retiro {
-          color: #e74c3c;
-        }
       }
     }
 
