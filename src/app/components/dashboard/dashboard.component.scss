@@ -456,3 +456,10 @@
     padding: 1.5rem;
   }
 } 
+
+.summary-card .card-content .amount,
+.summary-card .card-content .saldo,
+.summary-card .card-content .transaction-amount {
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+} 
