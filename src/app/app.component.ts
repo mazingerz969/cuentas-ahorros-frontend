@@ -25,10 +25,9 @@ import { CommonModule } from '@angular/common';
       <!-- Barra de navegación superior -->
       <header class="toolbar">
         <div class="toolbar-left">
-          <button class="menu-button" (click)="toggleSidenav()" type="button">
-            <span class="menu-icon">☰</span>
+          <button class="menu-button logo-burger" (click)="toggleSidenav()" type="button" style="display: flex; align-items: center; background: none; border: none;">
+            <img src="assets/logo.svg" alt="Logo del Banco" class="app-logo" style="height: 40px;" />
           </button>
-          <img src="assets/logo.svg" alt="Logo del Banco" class="app-logo" style="height: 40px;" />
         </div>
         
         <div class="toolbar-center">
@@ -396,6 +395,17 @@ import { CommonModule } from '@angular/common';
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    .logo-burger {
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .logo-burger:hover .app-logo {
+      filter: brightness(0.9);
+      /* O cualquier efecto visual */
     }
   `]
 })
