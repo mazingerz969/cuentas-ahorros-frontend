@@ -403,9 +403,17 @@ import { CommonModule } from '@angular/common';
       border: none;
       padding: 0;
     }
-    .logo-burger:hover .app-logo {
+    .logo-burger .app-logo {
+      transition: transform 0.15s, filter 0.15s;
+    }
+    .logo-burger:hover .app-logo,
+    .logo-burger:focus .app-logo {
       filter: brightness(0.9);
-      /* O cualquier efecto visual */
+      transform: scale(1.08);
+    }
+    .logo-burger:active .app-logo {
+      filter: brightness(0.8);
+      transform: scale(0.96);
     }
   `]
 })
