@@ -319,13 +319,19 @@ import { CommonModule } from '@angular/common';
     /* Responsive */
     @media (min-width: 768px) {
       .sidenav {
-        position: relative;
-        top: 0;
-        transform: translateX(0);
+        position: fixed;
+        top: 64px;
+        height: calc(100vh - 64px);
+        transform: translateX(-100%); /* ← Ahora está oculto por defecto */
+      }
+
+      .sidenav.sidenav-open {
+        transform: translateX(0); /* ← Solo se muestra cuando está abierto */
       }
 
       .content {
-        margin-left: 250px;
+        margin-left: 0; /* ← Sin margen fijo */
+        transition: margin-left 0.3s ease;
       }
 
       .sidenav-overlay {
