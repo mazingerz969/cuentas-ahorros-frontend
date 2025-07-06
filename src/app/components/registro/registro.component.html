@@ -69,6 +69,15 @@
       <div class="success-message" *ngIf="successMessage">
         {{ successMessage }}
       </div>
+
+      <button
+        type="submit"
+        class="registro-button"
+        [disabled]="registroForm.invalid || isLoading"
+      >
+        <span *ngIf="!isLoading">Crear Cuenta</span>
+        <span *ngIf="isLoading">Creando cuenta...</span>
+      </button>
     </form>
 
     <div class="registro-footer">
