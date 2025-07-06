@@ -21,6 +21,10 @@ export class LoginComponent {
     private usuarioService: UsuarioService,
     private router: Router
   ) {
+    // Redirigir si ya está autenticado
+    if (this.usuarioService.isAuthenticated()) {
+      this.router.navigate(['/dashboard']);
+    }
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]

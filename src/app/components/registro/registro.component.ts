@@ -22,6 +22,10 @@ export class RegistroComponent {
     private usuarioService: UsuarioService,
     private router: Router
   ) {
+    // Redirigir si ya está autenticado
+    if (this.usuarioService.isAuthenticated()) {
+      this.router.navigate(['/dashboard']);
+    }
     this.registroForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],

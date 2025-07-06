@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 /**
  * Configuración de rutas de la aplicación Angular.
@@ -33,32 +34,38 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent),
-    title: 'Dashboard'
+    title: 'Dashboard',
+    canActivate: [AuthGuard]
   },
   {
     path: 'cuentas',
     loadComponent: () => import('./components/cuentas/cuentas.component').then(m => m.CuentasComponent),
-    title: 'Gestión de Cuentas'
+    title: 'Gestión de Cuentas',
+    canActivate: [AuthGuard]
   },
   {
     path: 'cuentas/nueva',
     loadComponent: () => import('./components/cuentas/cuentas.component').then(m => m.CuentasComponent),
-    title: 'Nueva Cuenta'
+    title: 'Nueva Cuenta',
+    canActivate: [AuthGuard]
   },
   {
     path: 'transacciones',
     loadComponent: () => import('./components/transacciones/transacciones.component').then(m => m.TransaccionesComponent),
-    title: 'Transacciones'
+    title: 'Transacciones',
+    canActivate: [AuthGuard]
   },
   {
     path: 'transacciones/nueva',
     loadComponent: () => import('./components/transacciones/transacciones.component').then(m => m.TransaccionesComponent),
-    title: 'Nueva Transacción'
+    title: 'Nueva Transacción',
+    canActivate: [AuthGuard]
   },
   {
     path: 'notificaciones',
     loadComponent: () => import('./components/notificaciones/notificaciones.component').then(m => m.NotificacionesComponent),
-    title: 'Notificaciones'
+    title: 'Notificaciones',
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
