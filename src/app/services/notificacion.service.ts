@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class NotificacionService {
-  private apiUrl = 'http://localhost:8080/api/notificaciones';
+  private apiUrl = 'https://cuentas-ahorros-backend-production.up.railway.app/api/notificaciones';
   private notificacionesNoLeidasSubject = new BehaviorSubject<number>(0);
   public notificacionesNoLeidas$ = this.notificacionesNoLeidasSubject.asObservable();
 

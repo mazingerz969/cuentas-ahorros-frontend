@@ -8,7 +8,7 @@ import { Usuario, LoginRequest, RegistroRequest, UsuarioUpdateRequest, PasswordC
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:8080/api/usuarios';
+  private apiUrl = 'https://cuentas-ahorros-backend-production.up.railway.app/api/usuarios';
   private currentUserSubject = new BehaviorSubject<Usuario | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
