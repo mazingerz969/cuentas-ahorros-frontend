@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
-import { RouterOutlet, RouterModule } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { RouterOutlet, RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
+import { UsuarioService } from './services/usuario.service';
+import { NotificacionService } from './services/notificacion.service';
+import { Usuario } from './models/usuario.model';
 
 /**
  * Componente principal de la aplicación Angular.
@@ -39,9 +43,14 @@ import { CommonModule } from '@angular/common';
         <div class="toolbar-right">
           <button class="notification-button" (click)="showNotifications()" type="button">
             <span class="notification-icon">🔔</span>
+            <span *ngIf="notificacionesNoLeidas > 0" class="notification-badge">{{ notificacionesNoLeidas }}</span>
           </button>
           <button class="user-button" (click)="showUserMenu()" type="button">
             <span class="user-icon">👤</span>
+            <span *ngIf="usuario" class="user-name">{{ usuario.nombre }}</span>
+          </button>
+          <button *ngIf="usuario" class="logout-button" (click)="logout()" type="button">
+            <span class="logout-icon">🚪</span>
           </button>
         </div>
       </header>
@@ -62,6 +71,11 @@ import { CommonModule } from '@angular/common';
             <a class="nav-item" routerLink="/transacciones" routerLinkActive="active" (click)="closeSidenav()">
               <span class="nav-icon">💱</span>
               <span class="nav-text">Transacciones</span>
+            </a>
+            <a class="nav-item" routerLink="/notificaciones" routerLinkActive="active" (click)="closeSidenav()">
+              <span class="nav-icon">🔔</span>
+              <span class="nav-text">Notificaciones</span>
+              <span *ngIf="notificacionesNoLeidas > 0" class="nav-badge">{{ notificacionesNoLeidas }}</span>
             </a>
           </div>
         </nav>
@@ -189,7 +203,8 @@ import { CommonModule } from '@angular/common';
     }
 
     .notification-button,
-    .user-button {
+    .user-button,
+    .logout-button {
       background: none;
       border: none;
       color: white;
@@ -198,6 +213,11 @@ import { CommonModule } from '@angular/common';
       padding: 8px;
       border-radius: 50%;
       transition: all 0.3s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
       display: flex;
       align-items: center;
       justify-content: center;
@@ -207,14 +227,38 @@ import { CommonModule } from '@angular/common';
     }
 
     .notification-button:hover,
-    .user-button:hover {
+    .user-button:hover,
+    .logout-button:hover {
       background-color: rgba(255,255,255,0.2);
       transform: scale(1.05);
     }
 
     .notification-button:active,
-    .user-button:active {
+    .user-button:active,
+    .logout-button:active {
       transform: scale(0.95);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #ff4757;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .user-name {
+      font-size: 14px;
+      font-weight: 500;
+      margin-left: 4px;
     }
 
     /* Contenedor principal */
@@ -280,6 +324,21 @@ import { CommonModule } from '@angular/common';
 
     .nav-text {
       font-size: 16px;
+      flex: 1;
+    }
+
+    .nav-badge {
+      background: #ff4757;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-left: auto;
     }
 
     /* Contenido principal */
@@ -423,7 +482,7 @@ import { CommonModule } from '@angular/common';
     }
   `]
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   /**
    * Título de la aplicación.
    */
@@ -433,6 +492,45 @@ export class AppComponent {
    * Estado del menú lateral (abierto/cerrado).
    */
   sidenavOpen = false;
+  usuario: Usuario | null = null;
+  notificacionesNoLeidas = 0;
+  private destroy$ = new Subject<void>();
+
+  constructor(
+    private usuarioService: UsuarioService,
+    private notificacionService: NotificacionService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    // Suscribirse al usuario actual
+    this.usuarioService.currentUser$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(usuario => {
+        this.usuario = usuario;
+        if (usuario) {
+          this.cargarNotificacionesNoLeidas();
+        }
+      });
+
+    // Suscribirse al contador de notificaciones
+    this.notificacionService.notificacionesNoLeidas$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(count => {
+        this.notificacionesNoLeidas = count;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  cargarNotificacionesNoLeidas(): void {
+    if (this.usuario) {
+      this.notificacionService.contarNoLeidas(this.usuario.id).subscribe();
+    }
+  }
 
   /**
    * Alterna el estado del menú lateral.
@@ -471,15 +569,30 @@ export class AppComponent {
    * Muestra las notificaciones.
    */
   showNotifications(): void {
-    console.log('Mostrar notificaciones');
-    alert('🔔 Funcionalidad de notificaciones en desarrollo');
+    if (this.usuario) {
+      this.router.navigate(['/notificaciones']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   /**
    * Muestra el menú de usuario.
    */
   showUserMenu(): void {
-    console.log('Mostrar menú de usuario');
-    alert('👤 Funcionalidad de usuario en desarrollo');
+    if (this.usuario) {
+      // Aquí podrías mostrar un dropdown con opciones del usuario
+      console.log('Usuario actual:', this.usuario);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  /**
+   * Cierra la sesión del usuario.
+   */
+  logout(): void {
+    this.usuarioService.logout();
+    this.router.navigate(['/login']);
   }
 } 
