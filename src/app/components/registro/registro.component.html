@@ -70,20 +70,11 @@
         {{ successMessage }}
       </div>
 
-      <button
-        type="submit"
-        class="registro-button"
-        [disabled]="registroForm.invalid || isLoading"
-      >
-        <span *ngIf="!isLoading">Crear Cuenta</span>
-        <span *ngIf="isLoading">Creando cuenta...</span>
-      </button>
+      <div class="registro-footer">
+        <p>¿Ya tienes cuenta?
+          <a class="registro-link" routerLink="/login">Inicia sesión aquí</a>
+        </p>
+      </div>
     </form>
-
-    <div class="registro-footer">
-      <p>¿Ya tienes cuenta?
-        <button type="button" class="registro-link" (click)="irALogin()">Inicia sesión aquí</button>
-      </p>
-    </div>
   </div>
 </div> 
