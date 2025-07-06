@@ -74,4 +74,8 @@ export class LoginComponent {
     }
     return '';
   }
+
+  public irARegistro() {
+    this.router.navigate(['/registro']);
+  }
 } 
