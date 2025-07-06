@@ -61,10 +61,25 @@ export class RegistroComponent {
       this.usuarioService.registrar(registroData).subscribe({
         next: (usuario) => {
           console.log('Registro exitoso:', usuario);
-          this.successMessage = '¡Registro exitoso! Redirigiendo al login...';
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 2000);
+          // Login automático tras registro
+          this.usuarioService.login({
+            email: registroData.email,
+            password: registroData.password
+          }).subscribe({
+            next: (user) => {
+              this.successMessage = '¡Registro y login exitosos! Redirigiendo al dashboard...';
+              setTimeout(() => {
+                this.router.navigate(['/dashboard']);
+              }, 1500);
+            },
+            error: (loginError) => {
+              console.error('Error en login automático:', loginError);
+              this.successMessage = 'Registro exitoso. Por favor, inicia sesión.';
+              setTimeout(() => {
+                this.router.navigate(['/login']);
+              }, 2000);
+            }
+          });
         },
         error: (error) => {
           console.error('Error en registro:', error);
