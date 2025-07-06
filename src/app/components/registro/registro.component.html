@@ -69,12 +69,12 @@
       <div class="success-message" *ngIf="successMessage">
         {{ successMessage }}
       </div>
-
-      <div class="registro-footer">
-        <p>¿Ya tienes cuenta?
-          <a class="registro-link" routerLink="/login">Inicia sesión aquí</a>
-        </p>
-      </div>
     </form>
+
+    <div class="registro-footer">
+      <p>¿Ya tienes cuenta?
+        <button type="button" class="registro-link" (click)="router.navigate(['/login'])">Inicia sesión aquí</button>
+      </p>
+    </div>
   </div>
 </div> 

@@ -19,7 +19,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
-    private router: Router
+    public router: Router
   ) {
     // Redirigir si ya está autenticado (ELIMINADO PARA PERMITIR NAVEGACIÓN)
     this.loginForm = this.fb.group({

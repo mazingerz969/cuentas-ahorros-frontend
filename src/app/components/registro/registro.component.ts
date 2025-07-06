@@ -20,7 +20,7 @@ export class RegistroComponent {
   constructor(
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
-    private router: Router
+    public router: Router
   ) {
     // Redirigir si ya está autenticado (ELIMINADO PARA PERMITIR NAVEGACIÓN)
     this.registroForm = this.fb.group({
