@@ -127,4 +127,8 @@ export class RegistroComponent {
     };
     return fieldNames[controlName] || controlName;
   }
+
+  public irALogin() {
+    this.router.navigate(['/login']);
+  }
 } 
