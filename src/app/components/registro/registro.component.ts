@@ -71,7 +71,18 @@ export class RegistroComponent {
         },
         error: (error) => {
           console.error('Error en registro:', error);
-          this.errorMessage = error.error || 'Error al registrar usuario';
+          // Mostrar siempre el mensaje del backend, sea string plano o JSON
+          if (error.error) {
+            if (typeof error.error === 'string') {
+              this.errorMessage = error.error;
+            } else if (error.error.message) {
+              this.errorMessage = error.error.message;
+            } else {
+              this.errorMessage = 'Error al registrar usuario';
+            }
+          } else {
+            this.errorMessage = 'Error al registrar usuario';
+          }
           this.isLoading = false;
         },
         complete: () => {
