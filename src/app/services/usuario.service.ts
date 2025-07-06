@@ -14,9 +14,28 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) {
     // Recuperar usuario del localStorage al inicializar
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-      this.currentUserSubject.next(JSON.parse(savedUser));
+    this.initializeUserFromStorage();
+  }
+
+  /**
+   * Inicializa el usuario desde localStorage
+   */
+  private initializeUserFromStorage(): void {
+    try {
+      const savedUser = localStorage.getItem('currentUser');
+      if (savedUser) {
+        const user = JSON.parse(savedUser);
+        // Verificar que el usuario tenga los campos requeridos
+        if (user && user.id && user.email && user.nombre) {
+          this.currentUserSubject.next(user);
+        } else {
+          // Si el usuario no es válido, limpiar localStorage
+          localStorage.removeItem('currentUser');
+        }
+      }
+    } catch (error) {
+      console.error('Error al cargar usuario desde localStorage:', error);
+      localStorage.removeItem('currentUser');
     }
   }
 
@@ -60,7 +79,8 @@ export class UsuarioService {
    * Verifica si hay un usuario autenticado
    */
   isAuthenticated(): boolean {
-    return this.currentUserSubject.value !== null;
+    const user = this.currentUserSubject.value;
+    return user !== null && user.id !== undefined && user.email !== undefined;
   }
 
   /**

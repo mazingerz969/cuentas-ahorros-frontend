@@ -18,8 +18,8 @@ import { AuthGuard } from './guards/auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/dashboard',
-    pathMatch: 'full'
+    loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent),
+    title: 'Inicio'
   },
   {
     path: 'login',
@@ -69,6 +69,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/dashboard'
+    redirectTo: '/'
   }
 ]; 

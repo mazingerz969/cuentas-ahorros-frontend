@@ -26,8 +26,8 @@ import { Usuario } from './models/usuario.model';
     ],
     template: `
     <div class="app-container">
-      <!-- Barra de navegación superior -->
-      <header class="toolbar">
+      <!-- Barra de navegación superior - solo mostrar si hay usuario autenticado -->
+      <header *ngIf="usuario" class="toolbar">
         <div class="toolbar-left">
           <button class="menu-button logo-burger" (click)="toggleSidenav()" type="button" style="display: flex; align-items: center; background: none; border: none;">
             <img src="assets/logo.svg" alt="Logo del Banco" class="app-logo" style="height: 40px;" />
@@ -56,9 +56,9 @@ import { Usuario } from './models/usuario.model';
       </header>
 
       <!-- Contenedor principal -->
-      <div class="main-container">
-        <!-- Menú lateral -->
-        <nav class="sidenav" [class.sidenav-open]="sidenavOpen">
+      <div class="main-container" [class.with-toolbar]="usuario">
+        <!-- Menú lateral - solo mostrar si hay usuario autenticado -->
+        <nav *ngIf="usuario" class="sidenav" [class.sidenav-open]="sidenavOpen">
           <div class="nav-list">
             <a class="nav-item" routerLink="/dashboard" routerLinkActive="active" (click)="closeSidenav()">
               <span class="nav-icon">📊</span>
@@ -81,7 +81,7 @@ import { Usuario } from './models/usuario.model';
         </nav>
 
         <!-- Contenido principal -->
-        <main class="content">
+        <main class="content" [class.with-sidenav]="usuario">
           <div class="content-container">
             <router-outlet></router-outlet>
           </div>
@@ -92,7 +92,7 @@ import { Usuario } from './models/usuario.model';
       <div class="sidenav-overlay" 
            [class.overlay-visible]="sidenavOpen" 
            (click)="closeSidenav()"
-           *ngIf="sidenavOpen"></div>
+           *ngIf="sidenavOpen && usuario"></div>
     </div>
   `,
     styles: [`
@@ -265,6 +265,10 @@ import { Usuario } from './models/usuario.model';
       overflow: hidden;
     }
 
+    .main-container.with-toolbar {
+      margin-top: 64px; /* Ajustar para la altura de la barra de navegación */
+    }
+
     /* Menú lateral */
     .sidenav {
       background: white;
@@ -350,6 +354,10 @@ import { Usuario } from './models/usuario.model';
       padding: 24px;
       max-width: 1200px;
       margin: 0 auto;
+    }
+
+    .content.with-sidenav {
+      margin-left: 250px; /* Margen para el menú lateral */
     }
 
     /* Overlay para móviles */
