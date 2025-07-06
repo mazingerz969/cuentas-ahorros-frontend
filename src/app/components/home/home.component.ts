@@ -57,13 +57,19 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Verificar si el usuario está autenticado
-    if (this.usuarioService.isAuthenticated()) {
-      // Si está autenticado, redirigir a dashboard
-      this.router.navigate(['/dashboard']);
-    } else {
-      // Si no está autenticado, redirigir a login
-      this.router.navigate(['/login']);
-    }
+    // Usar un timeout para asegurar que el servicio se haya inicializado
+    setTimeout(() => {
+      console.log('HomeComponent: Verificando autenticación...');
+      const isAuthenticated = this.usuarioService.isAuthenticated();
+      console.log('HomeComponent: Usuario autenticado:', isAuthenticated);
+      
+      if (isAuthenticated) {
+        console.log('HomeComponent: Redirigiendo a dashboard...');
+        this.router.navigate(['/dashboard']);
+      } else {
+        console.log('HomeComponent: Redirigiendo a login...');
+        this.router.navigate(['/login']);
+      }
+    }, 100); // Pequeño delay para asegurar inicialización
   }
 } 

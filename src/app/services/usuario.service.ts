@@ -27,15 +27,21 @@ export class UsuarioService {
         const user = JSON.parse(savedUser);
         // Verificar que el usuario tenga los campos requeridos
         if (user && user.id && user.email && user.nombre) {
+          console.log('Usuario cargado desde localStorage:', user);
           this.currentUserSubject.next(user);
         } else {
-          // Si el usuario no es válido, limpiar localStorage
+          console.log('Usuario en localStorage no válido, limpiando...');
           localStorage.removeItem('currentUser');
+          this.currentUserSubject.next(null);
         }
+      } else {
+        console.log('No hay usuario en localStorage');
+        this.currentUserSubject.next(null);
       }
     } catch (error) {
       console.error('Error al cargar usuario desde localStorage:', error);
       localStorage.removeItem('currentUser');
+      this.currentUserSubject.next(null);
     }
   }
 
@@ -53,6 +59,7 @@ export class UsuarioService {
     return this.http.post<Usuario>(`${this.apiUrl}/login`, loginRequest)
       .pipe(
         tap(usuario => {
+          console.log('Login exitoso, guardando usuario:', usuario);
           // Guardar usuario en localStorage y BehaviorSubject
           localStorage.setItem('currentUser', JSON.stringify(usuario));
           this.currentUserSubject.next(usuario);
@@ -64,6 +71,7 @@ export class UsuarioService {
    * Cierra la sesión del usuario
    */
   logout(): void {
+    console.log('Cerrando sesión...');
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
@@ -80,7 +88,9 @@ export class UsuarioService {
    */
   isAuthenticated(): boolean {
     const user = this.currentUserSubject.value;
-    return user !== null && user.id !== undefined && user.email !== undefined;
+    const isAuth = user !== null && user.id !== undefined && user.email !== undefined;
+    console.log('Verificación de autenticación:', isAuth, user);
+    return isAuth;
   }
 
   /**
