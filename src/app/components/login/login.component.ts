@@ -40,7 +40,13 @@ export class LoginComponent {
         },
         error: (error) => {
           console.error('Error en login:', error);
-          this.errorMessage = error.error || 'Error al iniciar sesión';
+          if (error.error && error.error.message) {
+            this.errorMessage = error.error.message;
+          } else if (typeof error.error === 'string') {
+            this.errorMessage = error.error;
+          } else {
+            this.errorMessage = 'Error al iniciar sesión';
+          }
           this.isLoading = false;
         },
         complete: () => {
