@@ -29,8 +29,11 @@ import { Usuario } from './models/usuario.model';
       <!-- Barra de navegación superior - solo mostrar si hay usuario autenticado -->
       <header *ngIf="usuario" class="toolbar">
         <div class="toolbar-left">
-          <button class="menu-button logo-burger" (click)="toggleSidenav()" type="button" style="display: flex; align-items: center; background: none; border: none;">
-            <img src="assets/logo.svg" alt="Logo del Banco" class="app-logo" style="height: 40px;" />
+          <button class="menu-button" (click)="toggleSidenav()" type="button">
+            <div class="logo-container">
+              <span class="logo-icon">🛡️</span>
+              <span class="logo-text">Banco Alberto</span>
+            </div>
           </button>
         </div>
         
@@ -81,7 +84,7 @@ import { Usuario } from './models/usuario.model';
         </nav>
 
         <!-- Contenido principal -->
-        <main class="content" [class.with-sidenav]="usuario">
+        <main class="content" [class.with-sidenav]="usuario && sidenavOpen">
           <div class="content-container">
             <router-outlet></router-outlet>
           </div>
@@ -96,12 +99,12 @@ import { Usuario } from './models/usuario.model';
     </div>
   `,
     styles: [`
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     .app-container {
@@ -112,16 +115,17 @@ import { Usuario } from './models/usuario.model';
 
     /* Barra de navegación superior */
     .toolbar {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #1a1a1a;
       color: white;
-      padding: 0 16px;
-      height: 64px;
+      padding: 0 24px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       z-index: 1000;
       position: relative;
+      border-bottom: 1px solid #333;
     }
 
     .toolbar-left {
@@ -140,35 +144,34 @@ import { Usuario } from './models/usuario.model';
     .toolbar-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
       flex: 1;
       justify-content: flex-end;
     }
 
     .menu-button {
-      background: none;
+      background: transparent;
       border: none;
       color: white;
-      font-size: 24px;
       cursor: pointer;
       padding: 8px;
       border-radius: 4px;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 40px;
-      height: 40px;
+      min-width: 320px;
+      height: 60px;
+      width: 320px;
     }
 
     .menu-button:hover {
-      background-color: rgba(255,255,255,0.2);
-      transform: scale(1.05);
+      background-color: rgba(255,255,255,0.1);
     }
 
-    .menu-button:active {
-      transform: scale(0.95);
-    }
+
+
+
 
     .app-title {
       margin-left: 16px;
@@ -178,83 +181,70 @@ import { Usuario } from './models/usuario.model';
     }
 
     .breadcrumb {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
       padding: 8px 16px;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
     .breadcrumb-link {
-      background: #764ba2;
       color: #fff;
-      padding: 8px 24px;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 16px;
+      font-weight: 500;
+      font-size: 14px;
       text-decoration: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      transition: background 0.2s, color 0.2s;
-      display: inline-block;
+      transition: color 0.2s;
     }
+    
     .breadcrumb-link:hover {
-      background: #fff;
-      color: #764ba2;
-      border: 1px solid #764ba2;
+      color: #e0e0e0;
     }
 
     .notification-button,
     .user-button,
     .logout-button {
-      background: none;
-      border: none;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
       color: white;
-      font-size: 18px;
+      font-size: 14px;
       cursor: pointer;
-      padding: 8px;
-      border-radius: 50%;
-      transition: all 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
       position: relative;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
       justify-content: center;
       min-width: 40px;
-      height: 40px;
+      height: 36px;
     }
 
     .notification-button:hover,
     .user-button:hover,
     .logout-button:hover {
-      background-color: rgba(255,255,255,0.2);
-      transform: scale(1.05);
-    }
-
-    .notification-button:active,
-    .user-button:active,
-    .logout-button:active {
-      transform: scale(0.95);
+      background-color: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
     }
 
     .notification-badge {
       position: absolute;
-      top: 0;
-      right: 0;
-      background: #ff4757;
+      top: -2px;
+      right: -2px;
+      background: #dc3545;
       color: white;
       border-radius: 50%;
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       font-size: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
+      font-weight: 600;
     }
 
     .user-name {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
-      margin-left: 4px;
     }
 
     /* Contenedor principal */
@@ -266,21 +256,22 @@ import { Usuario } from './models/usuario.model';
     }
 
     .main-container.with-toolbar {
-      margin-top: 64px; /* Ajustar para la altura de la barra de navegación */
+      margin-top: 70px;
     }
 
     /* Menú lateral */
     .sidenav {
-      background: white;
-      width: 250px;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-      transform: translateX(-100%);
+      background: #f8f9fa;
+      width: 280px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+      transform: translateX(-100%); /* Oculto por defecto */
       transition: transform 0.3s ease;
       z-index: 999;
       position: fixed;
-      height: calc(100vh - 64px);
-      top: 64px;
+      height: calc(100vh - 70px);
+      top: 70px;
       overflow-y: auto;
+      border-right: 1px solid #e9ecef;
     }
 
     .sidenav-open {
@@ -288,76 +279,96 @@ import { Usuario } from './models/usuario.model';
     }
 
     .nav-list {
-      padding: 16px 0;
+      padding: 20px 0;
     }
 
     .nav-item {
       display: flex;
       align-items: center;
-      padding: 16px 24px;
-      color: #333;
+      padding: 14px 24px;
+      color: #495057;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       border-left: 3px solid transparent;
       font-weight: 500;
+      font-size: 14px;
     }
 
     .nav-item:hover {
-      background-color: #f8f9fa;
-      border-left-color: #667eea;
-      transform: translateX(4px);
+      background-color: #e9ecef;
+      border-left-color: #007bff;
+      color: #007bff;
     }
 
     .nav-item.active {
       background-color: #e3f2fd;
-      border-left-color: #667eea;
-      color: #1976d2;
+      border-left-color: #007bff;
+      color: #007bff;
       font-weight: 600;
     }
 
     .nav-icon {
-      font-size: 20px;
+      font-size: 18px;
       margin-right: 16px;
-      width: 24px;
+      width: 20px;
       text-align: center;
     }
 
     .nav-text {
-      font-size: 16px;
+      font-size: 14px;
       flex: 1;
     }
 
     .nav-badge {
-      background: #ff4757;
+      background: #dc3545;
       color: white;
       border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      font-size: 12px;
+      width: 18px;
+      height: 18px;
+      font-size: 11px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
+      font-weight: 600;
       margin-left: auto;
     }
 
     /* Contenido principal */
     .content {
       flex: 1;
-      background-color: #f5f5f5;
-      margin-left: 0;
+      background-color: #ffffff;
+      margin-left: 0; /* Sin margen cuando sidenav está cerrado */
       transition: margin-left 0.3s ease;
       overflow-y: auto;
     }
 
     .content-container {
-      padding: 24px;
+      padding: 32px;
       max-width: 1200px;
       margin: 0 auto;
     }
 
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+    }
+
+    .logo-icon {
+      font-size: 24px;
+      filter: brightness(0) invert(1);
+    }
+
+    .logo-text {
+      font-family: 'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: white;
+    }
+
     .content.with-sidenav {
-      margin-left: 250px; /* Margen para el menú lateral */
+      margin-left: 280px;
     }
 
     /* Overlay para móviles */
@@ -383,18 +394,22 @@ import { Usuario } from './models/usuario.model';
     @media (min-width: 768px) {
       .sidenav {
         position: fixed;
-        top: 64px;
-        height: calc(100vh - 64px);
-        transform: translateX(-100%); /* ← Ahora está oculto por defecto */
+        top: 70px;
+        height: calc(100vh - 70px);
+        transform: translateX(-100%); /* Oculto por defecto en desktop también */
       }
 
       .sidenav.sidenav-open {
-        transform: translateX(0); /* ← Solo se muestra cuando está abierto */
+        transform: translateX(0);
       }
 
       .content {
-        margin-left: 0; /* ← Sin margen fijo */
+        margin-left: 0; /* Sin margen cuando está cerrado */
         transition: margin-left 0.3s ease;
+      }
+
+      .content.with-sidenav {
+        margin-left: 280px; /* Margen solo cuando está abierto */
       }
 
       .sidenav-overlay {
@@ -409,80 +424,27 @@ import { Usuario } from './models/usuario.model';
     @media (max-width: 767px) {
       .sidenav {
         position: fixed;
-        top: 64px;
-        height: calc(100vh - 64px);
+        top: 70px;
+        height: calc(100vh - 70px);
       }
 
-      .app-title {
-        font-size: 16px;
-        margin-left: 8px;
+      .toolbar {
+        padding: 0 16px;
       }
 
       .breadcrumb {
         display: none;
       }
-
-      .toolbar {
-        padding: 0 8px;
-      }
     }
 
     @media (max-width: 480px) {
-      .app-title {
+      .toolbar {
+        padding: 0 12px;
+      }
+      
+      .user-name {
         display: none;
       }
-
-      .toolbar-left {
-        justify-content: center;
-      }
-    }
-
-    .animated-logo {
-      font-family: 'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-      background: linear-gradient(270deg, #ff6ec4, #7873f5, #1fd1f9, #ff6ec4);
-      background-size: 800% 800%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientMove 8s ease-in-out infinite;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.25), 0 0 2px #fff, 0 0 8px #764ba2;
-      filter: drop-shadow(0 2px 8px #764ba2);
-      border-radius: 8px;
-      padding: 2px 18px;
-      border: 2px solid #fff3;
-      box-shadow: 0 2px 12px 0 #764ba233;
-      margin-left: 16px;
-      transition: transform 0.2s;
-    }
-    .animated-logo:hover {
-      transform: scale(1.05) rotate(-2deg);
-      box-shadow: 0 4px 24px 0 #1fd1f955;
-    }
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .logo-burger {
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-    }
-    .logo-burger .app-logo {
-      transition: transform 0.15s, filter 0.15s;
-    }
-    .logo-burger:hover .app-logo,
-    .logo-burger:focus .app-logo {
-      filter: brightness(0.9);
-      transform: scale(1.08);
-    }
-    .logo-burger:active .app-logo {
-      filter: brightness(0.8);
-      transform: scale(0.96);
     }
   `]
 })
@@ -495,7 +457,7 @@ export class AppComponent implements OnInit, OnDestroy {
   /**
    * Estado del menú lateral (abierto/cerrado).
    */
-  sidenavOpen = false;
+  sidenavOpen = false; // Cerrado por defecto
   usuario: Usuario | null = null;
   notificacionesNoLeidas = 0;
   private destroy$ = new Subject<void>();
@@ -540,8 +502,9 @@ export class AppComponent implements OnInit, OnDestroy {
    * Alterna el estado del menú lateral.
    */
   toggleSidenav(): void {
+    console.log('Botón clickeado - Estado anterior:', this.sidenavOpen);
     this.sidenavOpen = !this.sidenavOpen;
-    console.log('Sidenav toggled:', this.sidenavOpen);
+    console.log('Nuevo estado del sidenav:', this.sidenavOpen);
   }
 
   /**

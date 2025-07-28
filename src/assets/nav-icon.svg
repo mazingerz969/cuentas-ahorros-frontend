@@ -1,0 +1,11 @@
+<svg width="300" height="50" viewBox="0 0 300 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Grupo para el icono centrado -->
+  <g transform="translate(15, 10)">
+    <!-- Icono de escudo -->
+    <path d="M12 2L3 7V12C3 16.4183 6.58172 20 11 20H13C17.4183 20 21 16.4183 21 12V7L12 2Z" stroke="currentColor" stroke-width="2"/>
+    <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Texto "Banco Alberto" -->
+  <text x="50" y="32" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="500" fill="currentColor">Banco Alberto</text>
+</svg> 
