@@ -36,7 +36,12 @@ export class LoginComponent {
       this.usuarioService.login(this.loginForm.value).subscribe({
         next: (usuario) => {
           console.log('Login exitoso:', usuario);
-          this.router.navigate(['/dashboard']);
+          console.log('Redirigiendo a dashboard...');
+          this.router.navigate(['/dashboard']).then(() => {
+            console.log('Redirección completada');
+          }).catch(err => {
+            console.error('Error en redirección:', err);
+          });
         },
         error: (error) => {
           console.error('Error en login:', error);

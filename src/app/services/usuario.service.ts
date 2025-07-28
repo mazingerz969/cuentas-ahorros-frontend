@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Usuario, LoginRequest, RegistroRequest, UsuarioUpdateRequest, PasswordChangeRequest } from '../models/usuario.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'https://cuentas-ahorros-backend-production.up.railway.app/api/usuarios';
+  private apiUrl = 'http://localhost:8080/api/usuarios';
   private currentUserSubject = new BehaviorSubject<Usuario | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
@@ -56,14 +57,17 @@ export class UsuarioService {
    * Autentica un usuario
    */
   login(loginRequest: LoginRequest): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/login`, loginRequest)
+    return this.http.post<any>(`${this.apiUrl}/login`, loginRequest)
       .pipe(
-        tap(usuario => {
-          console.log('Login exitoso, guardando usuario:', usuario);
+        tap(response => {
+          console.log('Login exitoso, guardando usuario:', response);
+          // El backend devuelve {token, usuario}, extraemos solo el usuario
+          const usuario = response.usuario || response;
           // Guardar usuario en localStorage y BehaviorSubject
           localStorage.setItem('currentUser', JSON.stringify(usuario));
           this.currentUserSubject.next(usuario);
-        })
+        }),
+        map(response => response.usuario || response)
       );
   }
 
